@@ -1,6 +1,8 @@
+
 notifications:
   email: false
 language: java
+before_script: cd H24Code
 sudo: false
 script: 
   mvn install "-DskipTests=true" "-Dmaven.javadoc.skip=true" -B -V
