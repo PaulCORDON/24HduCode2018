@@ -10,6 +10,7 @@ public class App
     {
     	/* pour mon commit */ 
     	int flo = 27;
+    	int balou= 10000;
         System.out.println( "Hello World! lol" );
         
         
