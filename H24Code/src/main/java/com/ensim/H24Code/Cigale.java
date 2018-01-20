@@ -41,12 +41,14 @@ public class Cigale {
 		
 		Response tracksAdverse = serveur.ListOtherTeamsTracks(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0]);
 	//	System.out.println(tracksAdverse.body().string());
-		
+
 		String jsonDoc = tracksAdverse.body().string();
 		System.out.println(jsonDoc);
 	
 	
 		JSONArray jsonarray = new JSONArray(jsonDoc);
+		
+		
 		for (int i = 0; i < jsonarray.length(); i++) {
 		    JSONObject jsonobject = jsonarray.getJSONObject(i);
 		    String id = jsonobject.getString("_id");
