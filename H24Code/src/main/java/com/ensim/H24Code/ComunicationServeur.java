@@ -40,6 +40,54 @@ public class ComunicationServeur {
 	}
 	
 	
+	
+	public Response CreatePositions(String trackId){
+		OkHttpClient client = new OkHttpClient();
+		MediaType mediaType = MediaType.parse("application/json");
+		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \""+trackId+",\r\n    \"positions\": [\r\n        {\r\n            \"lat\": 47.9848444,\r\n            \"lon\": 0.2373212,\r\n            \"timestamp\": \"2016-06-07T12:21:03.916Z\"\r\n        },\r\n        {\r\n            \"lat\": 47.9848336,\r\n            \"lon\": 0.2388045,\r\n            \"timestamp\": \"2016-06-07T12:21:04.916Z\"\r\n        }\r\n    ]\r\n}");
+		Request request = new Request.Builder()
+		  .url("https://f24h2018.herokuapp.com/api/positions/bulk")
+		  .post(body)
+		  .addHeader("Content-Type", "application/json")
+		  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3ODAyLCJleHAiOjE1MTY0NzU4MDJ9.dYuP25Jd8tHmlJnKIOgtKrbqhfHoRo2EiX_ok_7Vlsk")
+		  .addHeader("Cache-Control", "no-cache")
+		  .addHeader("Postman-Token", "1b8b7eb1-5a98-47a9-c68b-9993ed9aeb9a")
+		  .build();
+		Response response = null;
+		try {
+			response = client.newCall(request).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response;
+		}
+
+	
+	
+	public Response showPosition() {
+		OkHttpClient client = new OkHttpClient();
+		Request request = new Request.Builder()
+		  .url("https://f24h2018.herokuapp.com/api/positions/ChIJZ4ayW7yO4kcR3Jr7Wy_82Tk")
+		  .get()
+		  .addHeader("Content-Type", "application/json")
+		  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3ODAyLCJleHAiOjE1MTY0NzU4MDJ9.dYuP25Jd8tHmlJnKIOgtKrbqhfHoRo2EiX_ok_7Vlsk")
+		  .addHeader("Cache-Control", "no-cache")
+		  .addHeader("Postman-Token", "e522ac4c-4ef2-5696-7939-a5149cce37f3")
+		  .build();
+		Response response = null;
+		try {
+			response = client.newCall(request).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return response;
+		
+	}	
+
+
+	
 	/**
 	 *
 	 * @param token
@@ -49,7 +97,7 @@ public class ComunicationServeur {
 
 
 		Request request = new Request.Builder()
-		  .url("https://f24h2018.herokuapp.com/api/seeds/")
+		  .url("https://f24h2018.herokuapp.com/api/seeds/5a632a81f36d287087a19875")
 		  .get()
 		  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU2NDg3LCJleHAiOjE1MTY0NzQ0ODd9.DELLy3Mm-lCiU34-ZuZE6YvpvI8eJV0_gWUUXUx2IHc")
 		  .addHeader("Cache-Control", "no-cache")
@@ -65,6 +113,7 @@ public class ComunicationServeur {
 		}
 		return response;
 	}
+	
 public Response searchSeedAround() {
 
 	Request request = new Request.Builder()
@@ -82,16 +131,123 @@ public Response searchSeedAround() {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+
 	return response;
 	
 }
 
+public Response ListMyTracks() {
+	OkHttpClient client = new OkHttpClient();
+
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks/me")
+	  .get()
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU2NDg3LCJleHAiOjE1MTY0NzQ0ODd9.DELLy3Mm-lCiU34-ZuZE6YvpvI8eJV0_gWUUXUx2IHc")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "646fd91b-4dd3-4f9e-09f4-dc06201e48fb")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+}
+
+
+
+public Response ListOtherTeamsTracks() {
+	OkHttpClient client = new OkHttpClient();
+
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"name\": \"petite balade\",\r\n    \"info\": \"vers l'infini et ...\",\r\n    \"startSeedId\": \"576900a615cf52a849374947\",\r\n    \"endSeedId\": \"186900a615ab52a849372541\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks/otherTeams")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3NzAyLCJleHAiOjE1MTY0NzU3MDJ9.LZ7l-88HzLot4gFyTpPVyo86mir6jjBQoAhp1rb5_vs")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "6179edfd-4491-b803-c9be-88f538a99f46")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+	
+}
+
+public Response showATrack() {
+	OkHttpClient client = new OkHttpClient();
+
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks/5a632a81f36d287087a19875")
+	  .get()
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3NzAyLCJleHAiOjE1MTY0NzU3MDJ9.LZ7l-88HzLot4gFyTpPVyo86mir6jjBQoAhp1rb5_vs")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "9fa953d7-79ca-3ef5-85b1-8eaeefbec103")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+}
+
+
+public Response GetMyUserInfo() {
+	OkHttpClient client = new OkHttpClient();
+	Request request = new Request.Builder()
+			  .url("https://f24h2018.herokuapp.com/api/users/me")
+			  .get()
+			  .addHeader("Content-Type", "application/json")
+			  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3ODAyLCJleHAiOjE1MTY0NzU4MDJ9.dYuP25Jd8tHmlJnKIOgtKrbqhfHoRo2EiX_ok_7Vlsk")
+			  .addHeader("Cache-Control", "no-cache")
+			  .addHeader("Postman-Token", "08e15559-5ba3-ca09-57d9-72bbd2cf8b9c")
+			  .build();
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+
+}
+
 public static void main(String [] args) {
 	ComunicationServeur com=new ComunicationServeur();
-	Response auth1Token= com.Auth("ant1@mill.ant", "Vent");
-	System.out.println(auth1Token.isSuccessful());
+	System.out.println(com.Auth("ant1@mill.ant", "Vent").isSuccessful());
+	//System.out.println(com. CreatePositions("").isSuccessful());
+	System.out.println(com.showPosition().isSuccessful());
 	System.out.println(com.describeSeed().isSuccessful());
-	System.out.println(com.searchSeedAround().networkResponse());
+	System.out.println(com.searchSeedAround().isSuccessful());
+	System.out.println(com.ListMyTracks().isSuccessful());
+	System.out.println(com.ListOtherTeamsTracks().isSuccessful());
+	System.out.println(com.showATrack().isSuccessful());
+	System.out.println(com.GetMyUserInfo().isSuccessful());
+
+	
+	/*System.out.println(com.searchSeedAround().toString().split("url=")[1].split("}")[0]);
+	try {
+		System.out.println(com.searchSeedAround().body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	*/
 	
 }
 
