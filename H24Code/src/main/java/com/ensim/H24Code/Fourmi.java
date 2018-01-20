@@ -31,11 +31,13 @@ public class Fourmi {
 			
 			if(this.vitesse<13.7 && !veutFreiner) {
 				this.setVitesse(this.getVitesse()+acceleration);
+				System.out.println("a i="+i+" j'accelere");
 			}
 			
-			if(i<=c.size()-10) {
+			if(i>=c.size()-(this.getVitesse()/acceleration)) {
 				veutFreiner=true;
 				this.setVitesse(this.getVitesse()-acceleration);
+				System.out.println("a i="+i+" je ralentis");
 			}
 			
 			System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
@@ -57,6 +59,7 @@ public class Fourmi {
 			
 		}
 		
+		veutFreiner=false;
 		return c;
 		
 	}
@@ -76,6 +79,7 @@ public class Fourmi {
 		 * Position p2 = new Position(47.984667800000004,0.23652710000000002);
 		 */
 		Position p1 = new Position();
+		Position p2 = new Position();
 		Position p3;
 		
 		Fourmi fourmi = new Fourmi();
@@ -83,7 +87,7 @@ public class Fourmi {
 		
 		Chemin c = new Chemin();
 		try {
-			c.calculItineraire();
+			c.calculItineraire(p1,p2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
