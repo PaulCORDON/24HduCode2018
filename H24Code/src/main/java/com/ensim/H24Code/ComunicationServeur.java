@@ -223,7 +223,26 @@ public Response GetMyUserInfo(String id) {
 
 }
 
-//public Response showAllPositionsTrack(String id, )
+public Response showAllPositionsTrack(String id, String idTrack) {
+	
+	OkHttpClient client = new OkHttpClient();
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks/"+idTrack+"/positions")
+	  .get()
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "3e4732cc-f298-694a-1cea-847cdc3de4cf")
+	  .build();
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+
+}
 
 public static void main(String [] args) {
 	ComunicationServeur com=new ComunicationServeur();
@@ -241,13 +260,13 @@ public static void main(String [] args) {
 	}
 	
 	try {
-		idTrack=com.ListOtherTeamsTracks(token).body().string().split(":\"")[1].split(",")[0];
+		idTrack=com.ListOtherTeamsTracks(token).body().string().split(":\"")[1].split("\",")[0];
 	} catch (IOException e1) {
 		// TODO Auto-generated catch block
 		e1.printStackTrace();
 	}
 
-	
+	System.out.println("show all position d'une track: "+com.showAllPositionsTrack(token, idTrack).isSuccessful());
 	System.out.println("create position: "+com.CreatePositions(token).isSuccessful());
 	//System.out.println(com.showPosition(token).isSuccessful());
 	System.out.println(com.describeSeed(token).isSuccessful());
@@ -256,6 +275,7 @@ public static void main(String [] args) {
 	System.out.println(com.ListOtherTeamsTracks(token).isSuccessful());
 	try {
 		//System.out.println("show position:"+com.showPosition(token).body().string());
+		System.out.println("show all position d'une track: "+com.showAllPositionsTrack(token, idTrack).body().string());
 		System.out.println("describe seed:" +com.describeSeed(token).body().string());
 		System.out.println("search seed around: " +com.searchSeedAround(token).body().string());
 		System.out.println("liste de mes tracks:" +com.ListMyTracks(token).body().string());
