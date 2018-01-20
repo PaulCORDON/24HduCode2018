@@ -18,6 +18,11 @@ public class Chemin extends ArrayList<Position> {
 	boolean utilisable;
 	int temps;
 	
+	void afficheTemps() {
+		for(Position p : this) {
+			System.out.println(p.getTimestamp());
+		}
+	}
 	
 	public void calculItineraire () throws IOException {
 		
