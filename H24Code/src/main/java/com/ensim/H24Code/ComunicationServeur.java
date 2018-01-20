@@ -45,7 +45,7 @@ public class ComunicationServeur {
 	 * @param token
 	 * @return
 	 */
-	public String describeSeed() {
+	public Response describeSeed() {
 
 
 		Request request = new Request.Builder()
@@ -63,9 +63,9 @@ public class ComunicationServeur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return response.toString();
+		return response;
 	}
-public String searchSeedAround() {
+public Response searchSeedAround() {
 
 	Request request = new Request.Builder()
 	  .url("https://f24h2018.herokuapp.com/api/seeds/search")
@@ -82,16 +82,16 @@ public String searchSeedAround() {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	return response.toString();
+	return response;
 	
 }
 
 public static void main(String [] args) {
 	ComunicationServeur com=new ComunicationServeur();
 	Response auth1Token= com.Auth("ant1@mill.ant", "Vent");
-	System.out.println(auth1Token);
-	System.out.println(com.describeSeed());
-	System.out.println(com.searchSeedAround());
+	System.out.println(auth1Token.isSuccessful());
+	System.out.println(com.describeSeed().isSuccessful());
+	System.out.println(com.searchSeedAround().networkResponse());
 	
 }
 
