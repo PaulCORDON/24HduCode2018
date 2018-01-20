@@ -1,22 +1,39 @@
 package com.ensim.H24Code;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Position {
 	
 	double lat;
 	double lon;
-	GregorianCalendar temps;
+	GregorianCalendar timestamp;
 	
 	Position(double la, double lo){
 		lat=la;
 		lon=lo;
-		//temps=t;
+		timestamp=new GregorianCalendar();
 	}
 	
 	Position(){
-		
+		timestamp=new GregorianCalendar();
+	}
+	
+	
+	
+	void setTimestamp(GregorianCalendar t) {
+		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
+		timestamp.set(Calendar.MONTH, t.get(Calendar.MONTH));
+		timestamp.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
+		timestamp.set(Calendar.HOUR_OF_DAY, t.get(Calendar.HOUR_OF_DAY));
+		timestamp.set(Calendar.MINUTE, t.get(Calendar.MINUTE));
+		timestamp.set(Calendar.SECOND, t.get(Calendar.SECOND));
+		timestamp.set(Calendar.MILLISECOND, t.get(Calendar.MILLISECOND));
+	}
+	
+	String getTimestamp() {
+		return timestamp.get(Calendar.YEAR)+"-"+timestamp.get(Calendar.MONTH)+"-"+timestamp.get(Calendar.DAY_OF_MONTH)+"T"+timestamp.get(Calendar.HOUR_OF_DAY)+":"+timestamp.get(Calendar.MINUTE)+":"+timestamp.get(Calendar.SECOND)+"."+timestamp.get(Calendar.MILLISECOND)+"Z";
 	}
 	
 	/*Donne la longueur en m entre deux positions */
@@ -27,6 +44,7 @@ public class Position {
 		return Math.sqrt(Math.pow(deltaLatKm, 2)+Math.pow(deltaLonKm, 2))*1000;	
 	}
 	
+	/*Donne le point après un parcours depuis p1 vers p2 de 1s à vitesse "vitesse"*/
 	Position prochainPointEnUneSeconde(Position p2, double vitesse) {
 		Position p1 = new Position();
 		p1.lat = (vitesse*Math.abs(p2.lat-this.lat)/this.longueurEnM(this, p2))+this.lat;
@@ -42,11 +60,10 @@ public class Position {
 	
 	public static void main(String[] args) {
 		/*Donnees test
-		 * p1 : 47.984482199999995,0.23617069999999998
-		 * p2 : 47.984667800000004,0.23652710000000002
+		 * Position p1 = new Position(47.984482199999995,0.23617069999999998);
+		 * Position p2 = new Position(47.984667800000004,0.23652710000000002);
 		 */
-		Position p1 = new Position(47.984482199999995,0.23617069999999998);
-		Position p2 = new Position(47.984667800000004,0.23652710000000002);
+		Position p1 = new Position();
 		Position p3;
 		
 		Chemin cheminFourmi = new Chemin();
