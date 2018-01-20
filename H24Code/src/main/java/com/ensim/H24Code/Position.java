@@ -21,6 +21,11 @@ public class Position {
 		
 		return Math.sqrt(Math.pow(deltaLatKm, 2)+Math.pow(deltaLonKm, 2));	
 	}
+	public String toString () {
+		
+		return "latitude = "+ lat + " longitude = "+ lon ; 
+		
+	}
 	
 	public static void main(String[] args) {
 		Position p1 = new Position(47.9829081,0.2331228);

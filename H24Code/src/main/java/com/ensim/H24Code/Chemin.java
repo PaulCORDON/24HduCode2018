@@ -3,6 +3,7 @@ package com.ensim.H24Code;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.squareup.okhttp.OkHttpClient;
@@ -12,7 +13,7 @@ import com.sun.javafx.css.CalculatedValue;
 
 import netscape.javascript.JSObject;
 
-public class Chemin extends ArrayList<Noeud> {
+public class Chemin extends ArrayList<Position> {
 	
 	boolean utilisable;
 	int temps;
@@ -30,7 +31,22 @@ public class Chemin extends ArrayList<Noeud> {
 		  .build();
 		Response response = client.newCall(request).execute();
 		JSONObject jsonObj = new JSONObject(response.body().string());
-		System.out.println(jsonObj);
+		//System.out.println(jsonObj);
+		JSONArray tabPosition = new JSONArray();
+		tabPosition = jsonObj.getJSONArray("snappedPoints");
+		//System.out.println(tabPosition);
+		for (int i=0 ; i<tabPosition.length(); i++ ) {
+			JSONObject point = (JSONObject) tabPosition.get(i);
+			JSONObject location = (JSONObject) point.get(("location"));
+			double lat = location.getDouble("latitude");
+			double lon = location.getDouble("longitude");
+			
+			//System.out.println(lat);
+		//	System.out.println(lon);
+			this.add(new Position (lat,lon));
+			
+		}
+		System.out.println(this);
 	}
 	
 	
@@ -39,5 +55,8 @@ public class Chemin extends ArrayList<Noeud> {
 		Chemin c = new Chemin ();
 		c.calculItineraire();
 		
+		
 	}
+	
+	
 }
