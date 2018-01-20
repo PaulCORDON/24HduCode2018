@@ -60,6 +60,7 @@ public class Fourmi {
 		}
 		
 		veutFreiner=false;
+		this.setVitesse(0);
 		return c;
 		
 	}
@@ -78,14 +79,19 @@ public class Fourmi {
 		 * Position p1 = new Position(47.984482199999995,0.23617069999999998);
 		 * Position p2 = new Position(47.984667800000004,0.23652710000000002);
 		 */
-		Position p1 = new Position();
-		Position p2 = new Position();
+		
+		/*Maison*/
+		Position p1 = new Position(47.984393, 0.236012);
+		/*Première graine*/
+		Position p2 = new Position(47.984946, 0.238951);
 		Position p3;
 		
 		Fourmi fourmi = new Fourmi();
 		Chemin trackAllerGraine1;
+		Chemin trackAllerGraine2;
 		
 		Chemin c = new Chemin();
+		Chemin c1 = new Chemin();
 		try {
 			c.calculItineraire(p1,p2);
 		} catch (IOException e) {
@@ -101,6 +107,18 @@ public class Fourmi {
 			System.out.println("La distance entre ces deux points est de "+p1.longueurEnM(trackAllerGraine1.get(i),trackAllerGraine1.get(i+1))+"m");
 				
 		}
+		
+		
+		
+		try {
+			c1.calculItineraire(p2, p1);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		trackAllerGraine2 = fourmi.creerTrack(c1);
+		
 		
 
 	}
