@@ -20,7 +20,13 @@ public class Position {
 		timestamp=new GregorianCalendar();
 	}
 	
+	double getLat() {
+		return lat;
+	}
 	
+	double getLon() {
+		return lon;
+	}
 	
 	void setTimestamp(GregorianCalendar t) {
 		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
@@ -64,13 +70,14 @@ public class Position {
 		 * Position p2 = new Position(47.984667800000004,0.23652710000000002);
 		 */
 		Position p1 = new Position();
+		Position p2 = new Position();
 		Position p3;
 		
 		Chemin cheminFourmi = new Chemin();
 		
 		Chemin c = new Chemin();
 		try {
-			c.calculItineraire();
+			c.calculItineraire(p1,p2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
