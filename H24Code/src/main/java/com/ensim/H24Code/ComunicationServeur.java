@@ -2,8 +2,6 @@ package com.ensim.H24Code;
 
 import java.io.IOException;
 
-import javax.naming.CommunicationException;
-
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -13,9 +11,14 @@ import com.squareup.okhttp.Response;
 public class ComunicationServeur {
 
 	OkHttpClient client = new OkHttpClient();
-	
-	public String Auth(String login, String mdp){
-		OkHttpClient client = new OkHttpClient();
+	/**
+	 * connection au serveur 
+	 * @param login
+	 * @param mdp
+	 * @return
+	 */
+	public Response Auth(String login, String mdp){
+
 		Response response=null;
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"email\": \""+login+"\",\r\n    \"password\": \""+mdp+"\"\r\n}");
@@ -33,10 +36,17 @@ public class ComunicationServeur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return response.toString();
+		return response;
 	}
-	public String describeSeed(String token) {
-		OkHttpClient client = new OkHttpClient();
+	
+	
+	/**
+	 *
+	 * @param token
+	 * @return
+	 */
+	public Response describeSeed() {
+
 
 		Request request = new Request.Builder()
 		  .url("https://f24h2018.herokuapp.com/api/seeds/")
@@ -53,14 +63,35 @@ public class ComunicationServeur {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return response.toString();
+		return response;
 	}
+public Response searchSeedAround() {
 
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/seeds/search")
+	  .get()
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmE4MWYzNmQyODcwODdhMTk4NzUiLCJyb2xlIjoiYW50IiwiaWF0IjoxNTE2NDU3NzAyLCJleHAiOjE1MTY0NzU3MDJ9.LZ7l-88HzLot4gFyTpPVyo86mir6jjBQoAhp1rb5_vs")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "deea109b-90e2-f9bc-a754-1e243685bac1")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+	
+}
 
 public static void main(String [] args) {
 	ComunicationServeur com=new ComunicationServeur();
-	String auth1Token= com.Auth("ant1@mill.ant", "Vent");
-	System.out.println(com.describeSeed(auth1Token));
+	Response auth1Token= com.Auth("ant1@mill.ant", "Vent");
+	System.out.println(auth1Token.isSuccessful());
+	System.out.println(com.describeSeed().isSuccessful());
+	System.out.println(com.searchSeedAround().networkResponse());
 	
 }
 

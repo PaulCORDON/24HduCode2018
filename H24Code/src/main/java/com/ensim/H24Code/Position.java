@@ -33,6 +33,11 @@ public class Position {
 		
 		return p1;
 	}
+	public String toString () {
+		
+		return "latitude = "+ lat + " longitude = "+ lon ; 
+		
+	}
 	
 	public static void main(String[] args) {
 		/*Donnees test
