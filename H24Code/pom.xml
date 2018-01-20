@@ -29,6 +29,12 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/de.ixilon/overpass-api -->
+		<dependency>
+			<groupId>de.ixilon</groupId>
+			<artifactId>overpass-api</artifactId>
+			<version>0.6.1</version>
+		</dependency>
 
 	</dependencies>
 </project>
