@@ -9,11 +9,19 @@ public class Position {
 	double lat;
 	double lon;
 	GregorianCalendar timestamp;
+	String id ; 
 	
 	Position(double la, double lo){
 		lat=la;
 		lon=lo;
 		timestamp=new GregorianCalendar();
+	}
+	
+	Position(double la, double lo, String i){
+		lat=la;
+		lon=lo;
+		timestamp=new GregorianCalendar();
+		id =i;
 	}
 	
 	Position(){
@@ -60,7 +68,7 @@ public class Position {
 	}
 	public String toString () {
 		
-		return "latitude = "+ lat + " longitude = "+ lon ; 
+		return "latitude = "+ lat + " longitude = "+ lon + " id = " + id + "\n"; 
 		
 	}
 	
