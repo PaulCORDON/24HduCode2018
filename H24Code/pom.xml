@@ -35,13 +35,14 @@
 			<artifactId>overpass-api</artifactId>
 			<version>0.6.1</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
-<dependency>
-    <groupId>org.jsoup</groupId>
-    <artifactId>jsoup</artifactId>
-    <version>1.7.2</version>
-</dependency>
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
+		<dependency>
+		    <groupId>com.squareup.okhttp</groupId>
+		    <artifactId>okhttp</artifactId>
+		    <version>2.7.5</version>
+		</dependency>
+
+
 		
 
 	</dependencies>

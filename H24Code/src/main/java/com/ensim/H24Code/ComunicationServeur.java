@@ -1,10 +1,18 @@
 package com.ensim.H24Code;
 
+import java.io.IOException;
+
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
 public class ComunicationServeur {
 
 	OkHttpClient client = new OkHttpClient();
 
-	public void Auth(String login, String mdp){
+	public static void Auth(String login, String mdp){
 		OkHttpClient client = new OkHttpClient();
 
 		MediaType mediaType = MediaType.parse("application/json");
@@ -17,12 +25,22 @@ public class ComunicationServeur {
 		  .addHeader("Postman-Token", "a7c343d0-e873-5778-b49b-961daa54001d")
 		  .build();
 
-		Response response = client.newCall(request).execute();
+		try {
+			Response response = client.newCall(request).execute();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-}
+
 
 
 public static void main(String [] args) {
 	
 	Auth("ant1@mill.ant", "Vent");
+}
+
+
+
+
 }
