@@ -578,6 +578,13 @@ public void EnvoyerTrackFourmieComplete() {
 	
 	com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" );
 	System.out.println("change ant position:"+com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" ).isSuccessful());
+	try {
+		System.out.println("search seed around: " +com.searchSeedAround(token).body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 
 }
 

@@ -1,9 +1,6 @@
 package com.ensim.H24Code;
 
-import java.io.IOException;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 public class Position {
 	
@@ -36,16 +33,8 @@ public class Position {
 		return lon;
 	}
 	
-	void setTimestamp() {
-		timestamp=Instant.now();
-		System.out.println(timestamp);
-//		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
-//		timestamp.set(Calendar.MONTH, t.get(Calendar.MONTH));
-//		timestamp.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
-//		timestamp.set(Calendar.HOUR_OF_DAY, t.get(Calendar.HOUR_OF_DAY));
-//		timestamp.set(Calendar.MINUTE, t.get(Calendar.MINUTE));
-//		timestamp.set(Calendar.SECOND, t.get(Calendar.SECOND));
-//		timestamp.set(Calendar.MILLISECOND, t.get(Calendar.MILLISECOND));
+	void setTimestamp(Instant t) {
+		timestamp=t.plusSeconds(1);
 	}
 	
 	Instant getTimestamp() {
