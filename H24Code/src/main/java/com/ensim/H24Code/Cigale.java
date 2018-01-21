@@ -9,6 +9,8 @@ import javax.naming.CommunicationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 public class Cigale {
@@ -82,6 +84,29 @@ public class Cigale {
 		   System.out.println(time);*/
 		   track.add(new Position(lat,lon,id));
 		}
+		
+	}
+
+	
+	public void ajoutContraintes () throws IOException {
+		
+		for (Position pos : track) {
+			OkHttpClient client = new OkHttpClient();
+
+			Request request = new Request.Builder()
+			  .url("http://overpass-api.de/api/interpreter?data=[out:json][timeout:25];%0A//%20gather%20results%0A%28%0A%20%20//%20query%20part%20for:%20%E2%80%9Cstop%E2%80%9D%0A%20%20node[%22highway%22=%22stop%22]%28around:1.0,"+pos.lat+"," +pos.lon+"%29;%0A%20%20node[%22highway%22=%22traffic_signals%22]%28around:500.0,47.984743,0.240155%29;%0A%29;%0A//%20print%20results%0Aout%20body;%0A%3E;%0Aout%20skel%20qt;")
+			  .get()
+			  .addHeader("Cache-Control", "no-cache")
+			  .addHeader("Postman-Token", "9351032e-7310-1e98-01f0-73f670099a44")
+			  .build();
+
+			Response response = client.newCall(request).execute();
+
+			System.out.println(response.body().string());
+			
+		}
+		
+		
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -90,6 +115,7 @@ public class Cigale {
 		cigale.parseTrack();
 		cigale.parsePosition();
 		System.out.println(cigale.track);
+		cigale.ajoutContraintes();
 		
 	}
 
