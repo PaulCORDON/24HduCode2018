@@ -398,9 +398,13 @@ public void EnvoyerTrackFourmieComplete() {
 		e.printStackTrace();
 	}
 	com.CreatePositions(token,idTrack,ant1.creerTrack(c).toString());
+	System.out.println("test creer position: "+com.CreatePositions(token,idTrack,ant1.creerTrack(c).toString()).isSuccessful());
 	com.endTrack(idTrack, token);
+	System.out.println("test end track: "+com.endTrack(idTrack, token).isSuccessful());
 	try {
 		System.out.println(com.showAllPositionsTrack(token, "5a63e834df71750014294e8c").body().string());
+		System.out.println(com.showAllPositionsTrack(token, "5a63e834df71750014294e8c").isSuccessful());
+
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
