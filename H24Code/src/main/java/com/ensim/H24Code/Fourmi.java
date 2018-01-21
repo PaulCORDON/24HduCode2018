@@ -31,7 +31,7 @@ public class Fourmi {
 	    for(int i=0;i<c.size()-1;i++) {
 	      
 	    	/*On incrémente le timestamp de 1 seconde*/	
-		    t.plusSeconds(1);
+		    t=t.plusSeconds(1);
 		    
 		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
 		    if(this.vitesse<13.7 && !veutFreiner) {

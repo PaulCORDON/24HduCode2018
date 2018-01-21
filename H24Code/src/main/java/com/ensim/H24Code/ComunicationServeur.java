@@ -13,10 +13,10 @@ public class ComunicationServeur {
 	String idAnt1="5a632a81f36d287087a19875";
 	OkHttpClient client = new OkHttpClient();
 	/**
-	 * connection au serveur 
+	 * Connection au serveur 
 	 * @param login
 	 * @param mdp
-	 * @return
+	 * @return 
 	 */
 	public Response Auth(String login, String mdp){
 
@@ -41,7 +41,13 @@ public class ComunicationServeur {
 	}
 	
 	
-	
+	/**
+	 * Creation des positions 
+	 * @param id
+	 * @param idTrack
+	 * @param positions tableau de toutes les positions retournées par la méthode createTrack de la classe fourmie
+	 * @return
+	 */
 	public Response CreatePositions(String id, String idTrack,String positions){
 		OkHttpClient client = new OkHttpClient();
 
@@ -67,7 +73,12 @@ public class ComunicationServeur {
 		}
 
 	
-	
+	/**
+	 * donne toute les informations d'une position à partir de son ID
+	 * @param id
+	 * @param idPosition
+	 * @return
+	 */
 	public Response showPosition(String id, String idPosition) {
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
@@ -92,7 +103,7 @@ public class ComunicationServeur {
 
 	
 	/**
-	 *
+	 *Méthode qui retourne la description d'une graine à partir de son id
 	 * @param token
 	 * @return
 	 */
@@ -117,6 +128,12 @@ public class ComunicationServeur {
 		return response;
 	}
 	
+	
+/**
+ * Méthode qui retourne les graines au alentour	
+ * @param id
+ * @return
+ */
 public Response searchSeedAround(String id) {
 
 	Request request = new Request.Builder()
@@ -139,6 +156,12 @@ public Response searchSeedAround(String id) {
 	
 }
 
+
+/**
+ * Méthode qui retourne la liste de toutes les tracks que nous avons créées
+ * @param id
+ * @return
+ */
 public Response ListMyTracks(String id) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -161,7 +184,11 @@ public Response ListMyTracks(String id) {
 }
 
 
-
+/**
+ * Méthode qui retourne la liste de toutes les tracks qu'ont créé nos adversaire 
+ * @param id
+ * @return
+ */
 public Response ListOtherTeamsTracks(String id) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -183,6 +210,13 @@ public Response ListOtherTeamsTracks(String id) {
 	return response;
 }
 
+
+/**
+ * Méthode qui retourne une track créé par nos adversaire à partir de son Id 
+ * @param id
+ * @param idTrack
+ * @return
+ */
 public Response showATrack(String id, String idTrack) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -205,6 +239,12 @@ public Response showATrack(String id, String idTrack) {
 }
 
 
+
+/**
+ * Méthode qui retourne nos infos utilisateur
+ * @param id
+ * @return
+ */
 public Response GetMyUserInfo(String id) {
 	OkHttpClient client = new OkHttpClient();
 	Request request = new Request.Builder()
@@ -226,6 +266,13 @@ public Response GetMyUserInfo(String id) {
 
 }
 
+
+/**
+ * Méthode qui retourne toutes les position d'une track à partir de son Id
+ * @param id
+ * @param idTrack
+ * @return
+ */
 public Response showAllPositionsTrack(String id, String idTrack) {
 	
 	OkHttpClient client = new OkHttpClient();
@@ -248,10 +295,16 @@ public Response showAllPositionsTrack(String id, String idTrack) {
 }
 
 
-public Response createAnalyse(String id, String trackId) {
+/**
+ * Méthode qui créé une analyse de cigale sur une position d'une track
+ * @param id
+ * @param trackId
+ * @return
+ */
+public Response createAnalyse(String id, String trackId,String positionId) {
 	OkHttpClient client = new OkHttpClient();
 	MediaType mediaType = MediaType.parse("application/json");
-	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \""+trackId+"\",\r\n    \"positionId\": \"5a635eff8fb12f001481b342\",\r\n    \"description\": \"dépassement de vitesse  : 75,6  > 50\"\r\n}");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \""+trackId+"\",\r\n    \"positionId\": \""+positionId+",\r\n    \"description\": \"dépassement de vitesse  : 75,6  > 50\"\r\n}");
 	Request request = new Request.Builder()
 	  .url("https://f24h2018.herokuapp.com/api/analyses")
 	  .post(body)
@@ -272,6 +325,15 @@ public Response createAnalyse(String id, String trackId) {
 
 }
 
+
+/**
+ * Méthode qui créée une track
+ * @param nomTrack
+ * @param id
+ * @param startSeedId
+ * @param endSeedId
+ * @return
+ */
 public Response createTrack(String nomTrack, String id, String startSeedId, String endSeedId) {
 	
 	OkHttpClient client = new OkHttpClient();
@@ -296,6 +358,12 @@ public Response createTrack(String nomTrack, String id, String startSeedId, Stri
 
 }
 
+
+/**
+ * Méthode qui retour nos Analyses
+ * @param id
+ * @return
+ */
 public Response getAnalyse(String id) {
 	OkHttpClient client = new OkHttpClient();
 	Request request = new Request.Builder()
@@ -316,6 +384,15 @@ public Response getAnalyse(String id) {
 
 }
 
+
+/**
+ * Méthode qui ferme une track pour la valider et la soumettre au serveur
+ * @param nomTrack
+ * @param info
+ * @param idTrack
+ * @param id
+ * @return
+ */
 public Response endTrack(String nomTrack, String info,String idTrack, String id) {
 	OkHttpClient client = new OkHttpClient();
 	MediaType mediaType = MediaType.parse("application/json");
@@ -341,6 +418,14 @@ public Response endTrack(String nomTrack, String info,String idTrack, String id)
 	
 }
 
+
+/**
+ * Méthode qui change la position de la fourmie une foit qu'elle a rejoind une graine
+ * @param id
+ * @param idFourmie
+ * @param seedId
+ * @return
+ */
 public Response changeAntPosition(String id, String idFourmie, String seedId) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -365,6 +450,15 @@ public Response changeAntPosition(String id, String idFourmie, String seedId) {
 	return response;
 }
 
+/**
+ * Méthode qui permet à la cygale de pouvoir signaler une vitesse excessive à telle position d'une track 
+ * @param token
+ * @param trackid
+ * @param positionid
+ * @param vitesseAutorisee
+ * @param vitesseRoulee
+ * @return
+ */
 public Response AnalyseVitesseExesive(String token,String trackid,String positionid,double vitesseAutorisee,double vitesseRoulee) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -389,6 +483,14 @@ public Response AnalyseVitesseExesive(String token,String trackid,String positio
 	return response;
 }
 
+
+/**
+ * Méthode qui permet à la cygale de pouvoir signaler un refut de priorité à telle position d'une track 
+ * @param token
+ * @param trackid
+ * @param positionid
+ * @return
+ */
 public Response AnalyseArretNonRespecter(String token,String trackid,String positionid) {
 	OkHttpClient client = new OkHttpClient();
 
@@ -416,7 +518,9 @@ public Response AnalyseArretNonRespecter(String token,String trackid,String posi
 
 
 
-
+/**
+ * Méthode qui permet à une formie d'aller chercher une graine 
+ */
 public void EnvoyerTrackFourmieComplete() {
 	ComunicationServeur com=new ComunicationServeur();
 	String token=null;
@@ -478,14 +582,12 @@ public void EnvoyerTrackFourmieComplete() {
 }
 
 
+/**
+ * Main servant à tester la classe au fur et à mesure
+ * @param args
+ */
 
-
-public static void main(String [] args) {
-	
-	
-	
-	
-	
+public static void main(String [] args) {	
 	
 	ComunicationServeur com=new ComunicationServeur();
 	com.EnvoyerTrackFourmieComplete();

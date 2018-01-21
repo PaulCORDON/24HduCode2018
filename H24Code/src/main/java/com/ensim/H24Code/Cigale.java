@@ -2,9 +2,7 @@ package com.ensim.H24Code;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
-import javax.naming.CommunicationException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,8 +12,8 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
 public class Cigale {
-	ArrayList<Position> track = new ArrayList<Position>();
-	ArrayList<String> idTrack = new ArrayList<String>();
+	 ArrayList<Position> track = new ArrayList<Position>();
+	 ArrayList<String> idTrack = new ArrayList<String>();
 	
 	boolean estEnDehorsDeRoute() {
 		return false;
@@ -31,13 +29,14 @@ public class Cigale {
 		String idTrack;
 		String idPos;
 		ComunicationServeur  serveur = new ComunicationServeur();
+		System.out.println("entrer dans la foncto");
 		for (Position p : track) {
 			
 			distanceEntreDeuxPts = p.longueurEnM(p, track.get(track.indexOf(p)+1));
 			if (distanceEntreDeuxPts > 13.88 ) {
 				System.out.println("LA FOURMI VA A PLUS DE 50KM/H !!!!!!! a la position : "+ p.getLat() + "\n" +  p.getLon() + "la vitesse est de : " + distanceEntreDeuxPts*3.6) ;
 				v = distanceEntreDeuxPts*3.6;
-				idTrack = track.get(0).id;
+				idTrack = track.get(8).id;
 				idPos = p.id;
 				boolean ok = serveur.AnalyseVitesseExesive(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0], "5a6350688fb12f001481b340", idPos, 50, v).isSuccessful();
 				System.out.println(ok);
@@ -80,7 +79,9 @@ public class Cigale {
 	}
 	public void parsePosition () throws IOException {
 		ComunicationServeur serveur = new ComunicationServeur();
-		Response reponse = serveur.showAllPositionsTrack(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0], "5a6350688fb12f001481b340");
+		System.out.println("je usis la ");
+		Response reponse = serveur.showAllPositionsTrack(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0],"5a641ab2ab6cf80014844081" + 
+				"");
 		//System.out.println(reponse.body().string());
 		String jsonDoc = reponse.body().string();
 		String id;
@@ -89,7 +90,7 @@ public class Cigale {
 		String time; 
 		
 		JSONArray jsonarray = new JSONArray(jsonDoc);
-		System.out.println(jsonDoc);
+		//System.out.println(jsonDoc);
 		for (int i = 0; i < jsonarray.length(); i++) {
 		    JSONObject jsonobject = jsonarray.getJSONObject(i);
 		     id = jsonobject.getString("_id");
@@ -132,10 +133,13 @@ public class Cigale {
 		Cigale cigale = new Cigale ();
 	
 		cigale.parseTrack();
-		cigale.parsePosition();
+		
+			cigale.parsePosition();
+			cigale.vitesseHorsLimite();
+		
 	//	System.out.println(cigale.track);
 		//cigale.ajoutContraintes();
-		cigale.vitesseHorsLimite();
+		
 	}
 
 }
