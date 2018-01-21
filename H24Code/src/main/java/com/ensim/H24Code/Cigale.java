@@ -26,7 +26,17 @@ public class Cigale {
 	}
 	
 	boolean vitesseHorsLimite() {
-		return false;
+		double distanceEntreDeuxPts;
+		for (Position p : track) {
+			
+			distanceEntreDeuxPts = p.longueurEnM(p, track.get(track.indexOf(p)+1));
+			if (distanceEntreDeuxPts > 13.88 ) {
+				System.out.println("LA FOURMI VA A PLUS DE 50KM/H !!!!!!! a la position : "+ p.getLat() + "\n" +  p.getLon() + "la vitesse est de : " + distanceEntreDeuxPts*3.6) ;
+				//return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	boolean nonRespectFeuxOuStop() {
@@ -114,9 +124,9 @@ public class Cigale {
 	
 		cigale.parseTrack();
 		cigale.parsePosition();
-		System.out.println(cigale.track);
-		cigale.ajoutContraintes();
-		
+	//	System.out.println(cigale.track);
+		//cigale.ajoutContraintes();
+		cigale.vitesseHorsLimite();
 	}
 
 }
