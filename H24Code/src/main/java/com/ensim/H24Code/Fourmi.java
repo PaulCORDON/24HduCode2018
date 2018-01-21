@@ -34,14 +34,12 @@ public class Fourmi {
 		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
 		    if(this.vitesse<13.7 && !veutFreiner) {
 		    	this.setVitesse(this.getVitesse()+acceleration);
-		        System.out.println("a i="+i+" j'accelere");
 		      }
 		    
 		    /*Freinage en anticipant l'arrêt*/
 			if(i>=c.size()-(this.getVitesse()/acceleration)) {
 			    veutFreiner=true;
 			    this.setVitesse(this.getVitesse()-acceleration);
-			    System.out.println("a i="+i+" je ralentis");
 			  }
 			
 			/*si la longueur entre les points de googlemap est plus grande que la distance que l'on
