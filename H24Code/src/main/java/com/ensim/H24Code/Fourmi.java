@@ -58,7 +58,7 @@ public class Fourmi {
 	      
 			    }
 			    else {
-			      p=c.get(i);
+			      p=c.get(i+1);
 			      p.setTimestamp(t);
 			      trackAllerGraine1.add(p);
 			      System.out.println("Le point p :"+c.get(i+1).lat+","+c.get(i+1).lon+" a ete ajoute a la liste");
@@ -66,7 +66,6 @@ public class Fourmi {
 		    
 		  }
 		  p=c.get(c.size()-1);
-		  t.add(Calendar.SECOND,1);
 		  p.setTimestamp(t);
 	      trackAllerGraine1.add(p);
 		  veutFreiner=false;
