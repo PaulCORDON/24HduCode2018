@@ -69,7 +69,7 @@ public class Position {
 	}
 	public String toString () {
 		
-		return "la = "+ lat + " lon = "+ lon + " timestamp = " + this.getTimestamp() + "\n"; 
+		return "{lat = "+ lat + " lon = "+ lon + " timestamp = " + this.getTimestamp() + "}\n"; 
 		
 	}
 	
