@@ -23,7 +23,7 @@ public class Fourmi {
 	    
 	    /*On ajoute le premier point dans notre liste et on set le timestamp au temps actuel*/
 	    track.add(c.get(0));
-	    track.get(0).setTimestamp(t);
+	    track.get(0).setTimestamp();
 
 	    /*On parcours l'itinéraire googlemap*/
 	    for(int i=0;i<c.size()-1;i++) {
@@ -49,7 +49,7 @@ public class Fourmi {
 			 */
 			if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
 				p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);  
-				p.setTimestamp(t);
+				p.setTimestamp();
 				track.add(p);
 				/*On ajoute ce nouveau point à la liste google map pour garder une cohérence dans
 				 * le parcours.
@@ -62,7 +62,7 @@ public class Fourmi {
 				 * pour l'ajouter dans notre liste
 				 */
 				p=c.get(i+1);
-				p.setTimestamp(t);
+				p.setTimestamp();
 				track.add(p);
 			}
 			    
@@ -71,7 +71,7 @@ public class Fourmi {
 	     * on réinitalise la vitesse et le booléen
 	     */
 	    p=c.get(c.size()-1);
-		p.setTimestamp(t);
+		p.setTimestamp();
 		track.add(p);
 		veutFreiner=false;
 		this.setVitesse(0);

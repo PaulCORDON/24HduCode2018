@@ -44,16 +44,18 @@ public class ComunicationServeur {
 	
 	public Response CreatePositions(String id, String idTrack,String positions){
 		OkHttpClient client = new OkHttpClient();
+
 		MediaType mediaType = MediaType.parse("application/json");
-		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": "+idTrack+",\r\n    \"positions\":"+positions+" }");
+		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \""+idTrack+"\",\r\n    \"positions\": "+positions+"\r\n\r\n}");
 		Request request = new Request.Builder()
 		  .url("https://f24h2018.herokuapp.com/api/positions/bulk")
 		  .post(body)
 		  .addHeader("Content-Type", "application/json")
 		  .addHeader("Authorization", "Bearer "+id)
 		  .addHeader("Cache-Control", "no-cache")
-		  .addHeader("Postman-Token", "1b8b7eb1-5a98-47a9-c68b-9993ed9aeb9a")
+		  .addHeader("Postman-Token", "80c0a7b4-48c3-c9a8-1ff0-95418d911853")
 		  .build();
+
 		Response response = null;
 		try {
 			response = client.newCall(request).execute();
@@ -314,18 +316,18 @@ public Response getAnalyse(String id) {
 
 }
 
-public Response endTrack(String nomTrack, String id) {
+public Response endTrack(String nomTrack, String info,String idTrack, String id) {
 	OkHttpClient client = new OkHttpClient();
-
 	MediaType mediaType = MediaType.parse("application/json");
-	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"name\": \""+nomTrack+",\r\n    \"info\": \"vers l'infini et ...\"\r\n}");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"name\": \""+nomTrack+"\",\r\n    \"info\": \""+info+"\"\r\n}");
+
 	Request request = new Request.Builder()
-	  .url("https://f24h2018.herokuapp.com/api/tracks//end")
+	  .url("https://f24h2018.herokuapp.com/api/tracks/"+idTrack+"/end")
 	  .put(body)
 	  .addHeader("Content-Type", "application/json")
 	  .addHeader("Authorization", "Bearer "+id)
 	  .addHeader("Cache-Control", "no-cache")
-	  .addHeader("Postman-Token", "b8c11af0-9365-446d-8545-0341252ff9f8")
+	  .addHeader("Postman-Token", "380a399c-44cc-b78d-4ae0-00a94d42e196")
 	  .build();
 
 	Response response = null;
@@ -444,15 +446,16 @@ public void EnvoyerTrackFourmieComplete() {
 
 	com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c");
 	try {
-		idTrack=com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").body().string().split("_id\":")[1].split("\",\"")[0];
+		idTrack=com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").body().string().split("_id\":\"")[1].split("\",\"")[0];
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	com.CreatePositions(token,idTrack,ant1.creerTrack(c).toString());
+	System.out.println("azertuopzertyui"+ant1.creerTrack(c).toString());
 	System.out.println("test creer position: "+com.CreatePositions(token,idTrack,ant1.creerTrack(c).toString()).isSuccessful());
-	com.endTrack(idTrack, token);
-	System.out.println("test end track: "+com.endTrack(idTrack, token).isSuccessful());
+	com.endTrack("petite balade","vers l'infini et ...", idTrack, token);
+	System.out.println("test end track: "+com.endTrack("petite balade","vers l'infini et ...",idTrack, token).isSuccessful());
 	try {
 		System.out.println(com.showAllPositionsTrack(token, "5a63e834df71750014294e8c").body().string());
 		System.out.println(com.showAllPositionsTrack(token, "5a63e834df71750014294e8c").isSuccessful());

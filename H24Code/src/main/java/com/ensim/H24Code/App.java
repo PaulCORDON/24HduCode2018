@@ -14,6 +14,9 @@ public class App
     	
     	Cigale cigale= new Cigale();
     	String tokenCigale=null;
+    
+    	
+    	
     	try {
 			tokenCigale=com.Auth("cicada@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
 		} catch (IOException e) {
@@ -50,7 +53,7 @@ public class App
 		
 		try {
 			System.out.println("search seed around: " +com.searchSeedAround(token1).body().string());
-			System.out.println("search seed around: " +com.searchSeedAround(token2).body().string());
+			/*System.out.println("search seed around: " +com.searchSeedAround(token2).body().string());*/
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

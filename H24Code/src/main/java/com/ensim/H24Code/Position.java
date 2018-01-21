@@ -1,6 +1,7 @@
 package com.ensim.H24Code;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -8,24 +9,23 @@ public class Position {
 	
 	double lat;
 	double lon;
-	GregorianCalendar timestamp;
+	Instant timestamp;
 	String id ; 
 	
 	Position(double la, double lo){
 		lat=la;
 		lon=lo;
-		timestamp=new GregorianCalendar();
+		timestamp= Instant.now();
 	}
-	
 	Position(double la, double lo, String i){
 		lat=la;
 		lon=lo;
-		timestamp=new GregorianCalendar();
+		timestamp=Instant.now();
 		id =i;
 	}
 	
 	Position(){
-		timestamp=new GregorianCalendar();
+		timestamp=Instant.now();
 	}
 	
 	double getLat() {
@@ -36,19 +36,20 @@ public class Position {
 		return lon;
 	}
 	
-	void setTimestamp(GregorianCalendar t) {
-		timestamp=new GregorianCalendar();
-		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
-		timestamp.set(Calendar.MONTH, t.get(Calendar.MONTH));
-		timestamp.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
-		timestamp.set(Calendar.HOUR_OF_DAY, t.get(Calendar.HOUR_OF_DAY));
-		timestamp.set(Calendar.MINUTE, t.get(Calendar.MINUTE));
-		timestamp.set(Calendar.SECOND, t.get(Calendar.SECOND));
-		timestamp.set(Calendar.MILLISECOND, t.get(Calendar.MILLISECOND));
+	void setTimestamp() {
+		timestamp=Instant.now();
+		System.out.println(timestamp);
+//		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
+//		timestamp.set(Calendar.MONTH, t.get(Calendar.MONTH));
+//		timestamp.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
+//		timestamp.set(Calendar.HOUR_OF_DAY, t.get(Calendar.HOUR_OF_DAY));
+//		timestamp.set(Calendar.MINUTE, t.get(Calendar.MINUTE));
+//		timestamp.set(Calendar.SECOND, t.get(Calendar.SECOND));
+//		timestamp.set(Calendar.MILLISECOND, t.get(Calendar.MILLISECOND));
 	}
 	
-	String getTimestamp() {
-		return timestamp.get(Calendar.YEAR)+"-"+timestamp.get(Calendar.MONTH)+"-"+timestamp.get(Calendar.DAY_OF_MONTH)+"T"+timestamp.get(Calendar.HOUR_OF_DAY)+":"+timestamp.get(Calendar.MINUTE)+":"+timestamp.get(Calendar.SECOND)+"."+timestamp.get(Calendar.MILLISECOND)+"Z";
+	Instant getTimestamp() {
+		return timestamp;
 	}
 	
 	/*Donne la longueur en m entre deux positions */
@@ -83,7 +84,7 @@ public class Position {
 	}
 	public String toString () {
 		
-		return "{\"lat\" : "+ lat + " ,\"lon\" : "+ lon + ", \"timestamp\" : \"" + this.getTimestamp() + "\"}\n"; 
+		return "{\"lat\" : "+ lat + " ,\"lon\" : "+ lon + ", \"timestamp\" : \"" + this.timestamp + "\"}\n"; 
 		
 	}
 	
