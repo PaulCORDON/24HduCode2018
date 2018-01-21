@@ -363,6 +363,58 @@ public Response changeAntPosition(String id, String idFourmie, String seedId) {
 	return response;
 }
 
+public Response AnalyseVitesseExesive(String token,String trackid,String positionid,double vitesseAutorisee,double vitesseRoulee) {
+	OkHttpClient client = new OkHttpClient();
+
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": "+trackid+",\r\n    \"positionId\": "+positionid+",\r\n    \"description\": \"dépassement de vitesse  : "+vitesseRoulee+"  > "+vitesseAutorisee+"\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/analyses")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmFhMmYzNmQyODcwODdhMTk4NzgiLCJyb2xlIjoiY2ljYWRhIiwiaWF0IjoxNTE2NTA2NDM2LCJleHAiOjE1MTY1MjQ0MzZ9.deFY9URgTOCKBUrhFuKS0qKu3RwzXNmJZhu-hLzS61k")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "5abddaca-719a-bb7e-2fd3-63524f1e39e4")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+}
+
+public Response AnalyseArretNonRespecter(String token,String trackid,String positionid) {
+	OkHttpClient client = new OkHttpClient();
+
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": "+trackid+",\r\n    \"positionId\": "+positionid+",\r\n    \\\"description\\\": \\\"Vous ne vous etes pas arrete a un stop ou a un feu\\\"\\r\\n}\"");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/analyses")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YTYzMmFhMmYzNmQyODcwODdhMTk4NzgiLCJyb2xlIjoiY2ljYWRhIiwiaWF0IjoxNTE2NTA2NDM2LCJleHAiOjE1MTY1MjQ0MzZ9.deFY9URgTOCKBUrhFuKS0qKu3RwzXNmJZhu-hLzS61k")
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "5abddaca-719a-bb7e-2fd3-63524f1e39e4")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+}
+
+
+
+
+
 public void EnvoyerTrackFourmieComplete() {
 	ComunicationServeur com=new ComunicationServeur();
 	String token=null;
