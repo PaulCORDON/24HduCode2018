@@ -10,6 +10,7 @@ import com.squareup.okhttp.Response;
 
 public class ComunicationServeur {
 
+	String idAnt1="5a632a81f36d287087a19875";
 	OkHttpClient client = new OkHttpClient();
 	/**
 	 * connection au serveur 
@@ -338,6 +339,29 @@ public Response endTrack(String nomTrack, String id) {
 	
 }
 
+public Response changeAntPosition(String id, String idFourmie, String seedId) {
+	OkHttpClient client = new OkHttpClient();
+
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"seedId\": \""+seedId+"\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/users/"+idFourmie+"/position")
+	  .put(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "282def43-e711-2e4c-e69a-241fa1c3cb99")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+}
 
 public void EnvoyerTrackFourmieComplete() {
 	ComunicationServeur com=new ComunicationServeur();
@@ -381,6 +405,15 @@ public void EnvoyerTrackFourmieComplete() {
 	;
 	try {
 		System.out.println("liste de mes tracks:" +com.ListMyTracks(token).body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" );
+	try {
+		System.out.println("change ant position:"+com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" ).isSuccessful());
+		System.out.println("get user info:"+com.GetMyUserInfo(token).body().string());
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
