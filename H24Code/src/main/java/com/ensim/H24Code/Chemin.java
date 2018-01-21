@@ -51,7 +51,7 @@ public class Chemin extends ArrayList<Position> {
 			this.add(new Position (lat,lon));
 			
 		}
-		System.out.println(this);
+		//System.out.println(this);
 	}
 	
 	
