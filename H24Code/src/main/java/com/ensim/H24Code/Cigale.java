@@ -14,7 +14,7 @@ import com.squareup.okhttp.Response;
 public class Cigale {
 	ArrayList<Position> track = new ArrayList<Position>();
 	ArrayList<String> idTrack = new ArrayList<String>();
-	
+	/* FONCTION POUR DETECTER LES ERREURS DU CODE DE LA ROUTE */
 	boolean estEnDehorsDeRoute() {
 		return false;
 	}
@@ -53,7 +53,11 @@ public class Cigale {
 	boolean refusPriorite() {
 		return false;
 	}
-	
+	/**
+	 * 
+	 *  parse les tracks des adversaires
+	 * @throws IOException
+	 */
 	public void parseTrack () throws IOException {
 
 		ComunicationServeur serveur = new ComunicationServeur();
@@ -76,6 +80,12 @@ public class Cigale {
 	
 	
 	}
+	
+	/**
+	 * 
+	 * parse les positions d'une tracks donnée 
+	 * @throws IOException
+	 */
 	public void parsePosition () throws IOException {
 		ComunicationServeur serveur = new ComunicationServeur();
 		Response reponse = serveur.showAllPositionsTrack(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0], "5a6350688fb12f001481b340");
@@ -105,6 +115,12 @@ public class Cigale {
 	}
 
 	
+	
+	/**
+	 * 
+	 * ajout des contraites du code de la route au différentes position du parcours
+	 * @throws IOException
+	 */
 	public void ajoutContraintes () throws IOException {
 		
 		for (Position pos : track) {
@@ -125,7 +141,12 @@ public class Cigale {
 		
 		
 	}
-
+/**
+ * 
+ * main pour tester les fonctions
+ * @param args
+ * @throws IOException
+ */
 	public static void main(String[] args) throws IOException {
 		Cigale cigale = new Cigale ();
 	
