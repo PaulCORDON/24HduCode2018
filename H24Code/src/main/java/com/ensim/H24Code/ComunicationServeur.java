@@ -41,10 +41,10 @@ public class ComunicationServeur {
 	
 	
 	
-	public Response CreatePositions(String id){
+	public Response CreatePositions(String id, String idTrack){
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
-		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \"\"5a5e71a2734d1d347185192c\",\r\n    \"positions\": [\r\n        {\r\n            \"lat\": 47.9848444,\r\n            \"lon\": 0.2373212,\r\n            \"timestamp\": \"2016-06-07T12:21:03.916Z\"\r\n        },\r\n        {\r\n            \"lat\": 47.9848336,\r\n            \"lon\": 0.2388045,\r\n            \"timestamp\": \"2016-06-07T12:21:04.916Z\"\r\n        }\r\n    ]\r\n}");
+		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \"\""+idTrack+"\",\r\n    \"positions\": [\r\n        {\r\n            \"lat\": 47.9848444,\r\n            \"lon\": 0.2373212,\r\n            \"timestamp\": \"2016-06-07T12:21:03.916Z\"\r\n        },\r\n        {\r\n            \"lat\": 47.9848336,\r\n            \"lon\": 0.2388045,\r\n            \"timestamp\": \"2016-06-07T12:21:04.916Z\"\r\n        }\r\n    ]\r\n}");
 		Request request = new Request.Builder()
 		  .url("https://f24h2018.herokuapp.com/api/positions/bulk")
 		  .post(body)
@@ -93,11 +93,11 @@ public class ComunicationServeur {
 	 * @param token
 	 * @return
 	 */
-	public Response describeSeed(String id) {
+	public Response describeSeed(String id, String idSeed) {
 
 
 		Request request = new Request.Builder()
-		  .url("https://f24h2018.herokuapp.com/api/seeds/5a632a81f36d287087a19875")
+		  .url("https://f24h2018.herokuapp.com/api/seeds/"+idSeed)
 		  .get()
 		  .addHeader("Authorization", "Bearer "+id)
 		  .addHeader("Cache-Control", "no-cache")
@@ -180,11 +180,11 @@ public Response ListOtherTeamsTracks(String id) {
 	return response;
 }
 
-public Response showATrack(String id, String idFourmie) {
+public Response showATrack(String id, String idTrack) {
 	OkHttpClient client = new OkHttpClient();
 
 	Request request = new Request.Builder()
-	  .url("https://f24h2018.herokuapp.com/api/tracks/5a6350688fb12f001481b340")
+	  .url("https://f24h2018.herokuapp.com/api/tracks/"+idTrack)
 	  .get()
 	  .addHeader("Authorization","Bearer "+id)
 	  .addHeader("Cache-Control", "no-cache")
@@ -244,16 +244,120 @@ public Response showAllPositionsTrack(String id, String idTrack) {
 
 }
 
+
+public Response createAnalyse(String id, String trackId) {
+	OkHttpClient client = new OkHttpClient();
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \""+trackId+"\",\r\n    \"positionId\": \"5a635eff8fb12f001481b342\",\r\n    \"description\": \"dépassement de vitesse  : 75,6  > 50\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/analyses")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "08e11df2-9f46-d63d-47d4-ac5101c37a7c")
+	  .build();
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+
+
+}
+
+public Response createTrack(String nomTrack, String id, String startSeedId, String endSeedId) {
+	
+	OkHttpClient client = new OkHttpClient();
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"name\": \""+nomTrack+"\",\r\n    \"info\": \"vers l'infini et ...\",\r\n    \"startSeedId\": \""+startSeedId+"\",\r\n    \"endSeedId\": \""+endSeedId+"\"\r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "5bfef78a-56f7-1c3e-db5e-80001db0570f")
+	  .build();
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+
+}
+
+public Response getAnalyse(String id) {
+	OkHttpClient client = new OkHttpClient();
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/analyses/me")
+	  .get()
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "7bbd9cc9-3719-7590-5be4-fe15fc63785f")
+	  .build();
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+
+}
+
+public Response endTrack(String nomTrack, String id) {
+	OkHttpClient client = new OkHttpClient();
+
+	MediaType mediaType = MediaType.parse("application/json");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"name\": \""+nomTrack+"\",\r\n \r\n}");
+	Request request = new Request.Builder()
+	  .url("https://f24h2018.herokuapp.com/api/tracks/5a6350688fb12f001481b340/end")
+	  .post(body)
+	  .addHeader("Content-Type", "application/json")
+	  .addHeader("Authorization", "Bearer "+id)
+	  .addHeader("Cache-Control", "no-cache")
+	  .addHeader("Postman-Token", "7d1f66ee-c32a-2bd1-e34d-9edc668859fa")
+	  .build();
+
+	Response response = null;
+	try {
+		response = client.newCall(request).execute();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return response;
+	
+}
+
 public static void main(String [] args) {
 	ComunicationServeur com=new ComunicationServeur();
-	System.out.println(com.Auth("ant1@mill.ant", "Vent").isSuccessful());
 	
 	String token=null;
 	String idTrack=null;
+	String idPosition=null;
+	
+	Cigale cigale=new Cigale();
+	
+	try {
+		cigale.parsePosition();
+	} catch (IOException e2) {
+		// TODO Auto-generated catch block
+		e2.printStackTrace();
+	}
+	idPosition=cigale.track.get(2).id;
 	
 	
 	try {
-		token=com.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
+		token=com.Auth("cicada@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -266,17 +370,26 @@ public static void main(String [] args) {
 		e1.printStackTrace();
 	}
 
+	System.out.println("get analyse: "+com.getAnalyse(token).isSuccessful());
+	System.out.println("creation d'une track: "+com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").isSuccessful());
+	//System.out.println("end d'une track: "+com.endTrack("Track test", token).isSuccessful());
 	System.out.println("show all position d'une track: "+com.showAllPositionsTrack(token, idTrack).isSuccessful());
-	System.out.println("create position: "+com.CreatePositions(token).isSuccessful());
-	//System.out.println(com.showPosition(token).isSuccessful());
-	System.out.println(com.describeSeed(token).isSuccessful());
+	//System.out.println("create position: "+com.CreatePositions(token, idTrack).isSuccessful());
+	System.out.println("create analyse: "+com.createAnalyse(token, idTrack).isSuccessful());
+	System.out.println("show une position:"+com.showPosition(token, idPosition).isSuccessful());
+	//System.out.println(com.describeSeed(token).isSuccessful());
 	System.out.println(com.searchSeedAround(token).isSuccessful());
 	System.out.println(com.ListMyTracks(token).isSuccessful());
 	System.out.println(com.ListOtherTeamsTracks(token).isSuccessful());
 	try {
-		//System.out.println("show position:"+com.showPosition(token).body().string());
+		System.out.println("get analyse: "+com.getAnalyse(token).body().string());
+		System.out.println("creation d'une track: "+com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").body().string());
+		//System.out.println("end d'une track: "+com.endTrack("Track test", token).body().string());
+		System.out.println("show position:"+com.showPosition(token, idPosition).body().string());
+		//System.out.println("create position:"+com.CreatePositions(token, idTrack).body().string());
+		System.out.println("create analyse: "+com.createAnalyse(token, idTrack).body().string());
 		System.out.println("show all position d'une track: "+com.showAllPositionsTrack(token, idTrack).body().string());
-		System.out.println("describe seed:" +com.describeSeed(token).body().string());
+		//System.out.println("describe seed:" +com.describeSeed(token).body().string());
 		System.out.println("search seed around: " +com.searchSeedAround(token).body().string());
 		System.out.println("liste de mes tracks:" +com.ListMyTracks(token).body().string());
 		System.out.println("liste des tracks autres equipe:"+com.ListOtherTeamsTracks(token).body().string());
