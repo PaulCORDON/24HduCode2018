@@ -25,8 +25,13 @@ public class graines {
 			for (int i = 0; i < jsonarray.length(); i++) {
 			    JSONObject jsonobject = jsonarray.getJSONObject(i);
 			    
-			    
-			    String id = jsonobject.getString("id");
+			    String id=null;
+			    if((id=jsonobject.getString("_id"))!= null) {
+			    	this.LesGrainesDeLaCarte.add(new graine());
+					LesGrainesDeLaCarte.get(LesGrainesDeLaCarte.size()-1).id=id;
+			    }
+				
+
 			    
 			   System.out.println(id);
 			}

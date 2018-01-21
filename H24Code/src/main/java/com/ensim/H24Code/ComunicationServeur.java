@@ -41,10 +41,10 @@ public class ComunicationServeur {
 	
 	
 	
-	public Response CreatePositions(String id, String idTrack){
+	public Response CreatePositions(String id, String idTrack,String positions){
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
-		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": \"\""+idTrack+"\",\r\n    \"positions\": [\r\n        {\r\n            \"lat\": 47.9848444,\r\n            \"lon\": 0.2373212,\r\n            \"timestamp\": \"2016-06-07T12:21:03.916Z\"\r\n        },\r\n        {\r\n            \"lat\": 47.9848336,\r\n            \"lon\": 0.2388045,\r\n            \"timestamp\": \"2016-06-07T12:21:04.916Z\"\r\n        }\r\n    ]\r\n}");
+		RequestBody body = RequestBody.create(mediaType, positions);
 		Request request = new Request.Builder()
 		  .url("https://f24h2018.herokuapp.com/api/positions/bulk")
 		  .post(body)
@@ -317,14 +317,14 @@ public Response endTrack(String nomTrack, String id) {
 	OkHttpClient client = new OkHttpClient();
 
 	MediaType mediaType = MediaType.parse("application/json");
-	RequestBody body = RequestBody.create(mediaType, "{\r\n  \"name\": \""+nomTrack+"\",\r\n \r\n}");
+	RequestBody body = RequestBody.create(mediaType, "{\r\n    \"name\": \""+nomTrack+",\r\n    \"info\": \"vers l'infini et ...\"\r\n}");
 	Request request = new Request.Builder()
-	  .url("https://f24h2018.herokuapp.com/api/tracks/5a6350688fb12f001481b340/end")
-	  .post(body)
+	  .url("https://f24h2018.herokuapp.com/api/tracks//end")
+	  .put(body)
 	  .addHeader("Content-Type", "application/json")
 	  .addHeader("Authorization", "Bearer "+id)
 	  .addHeader("Cache-Control", "no-cache")
-	  .addHeader("Postman-Token", "7d1f66ee-c32a-2bd1-e34d-9edc668859fa")
+	  .addHeader("Postman-Token", "b8c11af0-9365-446d-8545-0341252ff9f8")
 	  .build();
 
 	Response response = null;
@@ -338,9 +338,69 @@ public Response endTrack(String nomTrack, String id) {
 	
 }
 
-public static void main(String [] args) {
+
+public void EnvoyerTrackFourmieComplete() {
 	ComunicationServeur com=new ComunicationServeur();
+	String token=null;
+	String idTrack=null;
+	String idPosition=null;
+	/*Maison*/
+	Position p1 = new Position(47.984393, 0.236012);
+	/*Première graine*/
+	Position p2 = new Position(47.984946, 0.238951);
+	Fourmi ant1= new Fourmi();
+	Chemin c = new Chemin();
+	try {
+		c.calculItineraire(p1, p2);
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	
+	try {
+		token=com.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c");
+	try {
+		idTrack=com.ListMyTracks(token).body().string().split("_id\":")[1].split("\",\"")[0];
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	com.CreatePositions(token,idTrack,ant1.creerTrack(c).toString());
+	com.endTrack(idTrack, token);
+	try {
+		System.out.println(com.showAllPositionsTrack(token, "5a63e834df71750014294e8c").body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	;
+	try {
+		System.out.println("liste de mes tracks:" +com.ListMyTracks(token).body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+}
+
+
+
+
+public static void main(String [] args) {
+	
+	
+	
+	
+	
+	
+	ComunicationServeur com=new ComunicationServeur();
+	com.EnvoyerTrackFourmieComplete();
+	/*
 	String token=null;
 	String idTrack=null;
 	String idPosition=null;
@@ -401,8 +461,20 @@ public static void main(String [] args) {
 		e.printStackTrace();
 	}
 	System.out.println(com.showATrack(token, idTrack).isSuccessful());
+	
+	try {
+		token=com.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	System.out.println(com.GetMyUserInfo(token).isSuccessful());
-
+	try {
+		System.out.println(com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").body().string());
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
 	
 	
 }
