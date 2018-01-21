@@ -16,54 +16,64 @@ public class Fourmi {
 	}
 	
 	Chemin creerTrack(Chemin c) {
-		Chemin trackAllerGraine1 = new Chemin();
-		Position p = new Position();
-		GregorianCalendar t =  new GregorianCalendar();
-		
-		trackAllerGraine1.add(c.get(0));
-		trackAllerGraine1.get(0).setTimestamp(t);
-		
-		
-		for(int i=0;i<c.size()-1;i++) {
-			
-			t.add(Calendar.SECOND,1);
-			System.out.println(t.get(Calendar.YEAR)+"-"+t.get(Calendar.MONTH)+"-"+t.get(Calendar.DAY_OF_MONTH)+"T"+t.get(Calendar.HOUR_OF_DAY)+":"+t.get(Calendar.MINUTE)+":"+t.get(Calendar.SECOND)+"."+t.get(Calendar.MILLISECOND)+"Z");
-			
-			if(this.vitesse<13.7 && !veutFreiner) {
-				this.setVitesse(this.getVitesse()+acceleration);
-				System.out.println("a i="+i+" j'accelere");
-			}
-			
-			if(i>=c.size()-(this.getVitesse()/acceleration)) {
-				veutFreiner=true;
-				this.setVitesse(this.getVitesse()-acceleration);
-				System.out.println("a i="+i+" je ralentis");
-			}
-			
-			System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
-			System.out.println("p"+(i+1)+" : "+c.get(i+1).lat+","+c.get(i+1).lon);
-			System.out.println("La distance entre ces deux points est de "+p.longueurEnM(c.get(i), c.get(i+1))+"m");
-			if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse) {
-				p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);	
-				p.setTimestamp(t);
-				trackAllerGraine1.add(p);
-				System.out.println("Le point p :"+p.lat+","+p.lon+" a ete ajoute a la liste");
-				c.set(i+1, p);
-			}
-			else {
-				p=c.get(i+1);
-				p.setTimestamp(t);
-				trackAllerGraine1.add(p);
-				System.out.println("Le point p :"+c.get(i+1).lat+","+c.get(i+1).lon+" a ete ajoute a la liste");
-			}
-			
+	    Chemin trackAllerGraine1 = new Chemin();
+	    Position p = new Position();
+	    GregorianCalendar t =  new GregorianCalendar();
+	    double longueurPrecedente=999999999;
+	    
+	    trackAllerGraine1.add(c.get(0));
+	    trackAllerGraine1.get(0).setTimestamp(t);
+	    
+	    int nbPoint=c.size();
+	    
+	    for(int i=0;i<c.size()-1;i++) {
+	      
+	      t.add(Calendar.SECOND,1);
+	      System.out.println(t.get(Calendar.YEAR)+"-"+t.get(Calendar.MONTH)+"-"+t.get(Calendar.DAY_OF_MONTH)+"T"+t.get(Calendar.HOUR_OF_DAY)+":"+t.get(Calendar.MINUTE)+":"+t.get(Calendar.SECOND)+"."+t.get(Calendar.MILLISECOND)+"Z");
+	      
+	      if(this.vitesse<13.7 && !veutFreiner) {
+	        this.setVitesse(this.getVitesse()+acceleration);
+	        System.out.println("a i="+i+" j'accelere");
+	      }
+
+		    /*if(i>=c.size()-(this.getVitesse()/acceleration)) {
+		      veutFreiner=true;
+		      this.setVitesse(this.getVitesse()-acceleration);
+		      System.out.println("a i="+i+" je ralentis");
+		    }*/
+		    
+		    System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
+		    System.out.println("p"+(i+1)+" : "+c.get(i+1).lat+","+c.get(i+1).lon);
+		    System.out.println("La distance entre ces deux points est de "+p.longueurEnM(c.get(i), c.get(i+1))+"m");
+		    	
+			    if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
+			    	
+				    System.out.println("distance entre c"+i+" et c"+(i+1)+" : "+p.longueurEnM(c.get(i), c.get(i+1)));
+				    	
+				    p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);  
+				    p.setTimestamp(t);
+				    trackAllerGraine1.add(p);
+				    System.out.println("Le point p :"+p.lat+","+p.lon+" a ete ajoute a la liste");
+				    c.add(i+1, p);
+	      
+			    }
+			    else {
+			      p=c.get(i);
+			      p.setTimestamp(t);
+			      trackAllerGraine1.add(p);
+			      System.out.println("Le point p :"+c.get(i+1).lat+","+c.get(i+1).lon+" a ete ajoute a la liste");
+			    }
+		    
+		  }
+		  
+	      trackAllerGraine1.add(c.get(c.size()-1));
+		  veutFreiner=false;
+		  this.setVitesse(0);
+		  return c;
+		  
 		}
-		
-		veutFreiner=false;
-		this.setVitesse(0);
-		return c;
-		
-	}
+
+
 	
 	
 	void setVitesse(double v) {
@@ -108,6 +118,9 @@ public class Fourmi {
 				
 		}
 		
+		System.out.println("p"+(trackAllerGraine1.size()-1)+" : "+trackAllerGraine1.get(trackAllerGraine1.size()-1).lat+","+trackAllerGraine1.get(trackAllerGraine1.size()-1).lon);
+		System.out.println(trackAllerGraine1.get(trackAllerGraine1.size()-1).getTimestamp());
+		
 		
 		
 		try {
@@ -117,7 +130,7 @@ public class Fourmi {
 			e.printStackTrace();
 		}
 		
-		trackAllerGraine2 = fourmi.creerTrack(c1);
+		/*trackAllerGraine2 = fourmi.creerTrack(c1);*/
 		
 		
 
