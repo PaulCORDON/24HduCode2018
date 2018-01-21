@@ -82,61 +82,11 @@ public class Position {
 		
 		return p1;
 	}
+	
 	public String toString () {
 		
 		return "{\"lat\" : "+ lat + " ,\"lon\" : "+ lon + ", \"timestamp\" : \"" + this.timestamp + "\"}\n"; 
 		
 	}
 	
-	public static void main(String[] args) {
-		/*Donnees test
-		 * Position p1 = new Position(47.984482199999995,0.23617069999999998);
-		 * Position p2 = new Position(47.984667800000004,0.23652710000000002);
-		 */
-		Position p1 = new Position();
-		Position p2 = new Position();
-		Position p3;
-		
-		Chemin cheminFourmi = new Chemin();
-		
-		Chemin c = new Chemin();
-		try {
-			c.calculItineraire(p1,p2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		cheminFourmi.add(c.get(0));
-		for(int i=0;i<c.size()-1;i++) {
-			
-			
-			System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
-			System.out.println("p"+(i+1)+" : "+c.get(i+1).lat+","+c.get(i+1).lon);
-			System.out.println("La distance entre ces deux points est de "+p1.longueurEnM(c.get(i), c.get(i+1))+"m");
-			if(p1.longueurEnM(c.get(i), c.get(i+1))>13.88) {
-				p3=c.get(i).prochainPointEnUneSeconde(c.get(i+1), 13.87);
-				//System.out.println("Le prochain point atteint en 1s est le point P : "+p3.lat+","+p3.lon);
-				cheminFourmi.add(p3);
-				System.out.println("Le point p :"+p3.lat+","+p3.lon+" a ete ajoute a la liste");
-				c.set(i+1, p3);
-			}
-			else {
-				cheminFourmi.add(c.get(i+1));
-				System.out.println("Le point p :"+c.get(i+1).lat+","+c.get(i+1).lon+" a ete ajoute a la liste");
-			}
-			
-		}
-
-		for(int i=0;i<cheminFourmi.size()-1;i++) {
-			System.out.println("p"+i+" : "+cheminFourmi.get(i).lat+","+cheminFourmi.get(i).lon);
-			System.out.println("La distance entre ces deux points est de "+p1.longueurEnM(cheminFourmi.get(i),cheminFourmi.get(i+1))+"m");
-			
-			
-		}
-	
-		
-
-	}
-
-
 }

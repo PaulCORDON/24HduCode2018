@@ -34,14 +34,12 @@ public class Fourmi {
 		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
 		    if(this.vitesse<13.7 && !veutFreiner) {
 		    	this.setVitesse(this.getVitesse()+acceleration);
-		        System.out.println("a i="+i+" j'accelere");
 		      }
 		    
 		    /*Freinage en anticipant l'arrêt*/
 			if(i>=c.size()-(this.getVitesse()/acceleration)) {
 			    veutFreiner=true;
 			    this.setVitesse(this.getVitesse()-acceleration);
-			    System.out.println("a i="+i+" je ralentis");
 			  }
 			
 			/*si la longueur entre les points de googlemap est plus grande que la distance que l'on
@@ -97,14 +95,11 @@ public class Fourmi {
 		Position p2 = new Position(47.984393, 0.236012);
 		/*Première graine*/
 		Position p1 = new Position(47.984946, 0.238951);
-		Position p3;
 		
 		Fourmi fourmi = new Fourmi();
 		Chemin trackAllerGraine1;
-		Chemin trackAllerGraine2;
 		
 		Chemin c = new Chemin();
-		Chemin c1 = new Chemin();
 		try {
 			c.calculItineraire(p1,p2);
 		} catch (IOException e) {
@@ -123,22 +118,6 @@ public class Fourmi {
 		
 		System.out.println("p"+(trackAllerGraine1.size()-1)+" : "+trackAllerGraine1.get(trackAllerGraine1.size()-1).lat+","+trackAllerGraine1.get(trackAllerGraine1.size()-1).lon);
 		System.out.println(trackAllerGraine1.get(trackAllerGraine1.size()-1).getTimestamp());
-		
-		
-		
-		try {
-			c1.calculItineraire(p2, p1);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		/*trackAllerGraine2 = fourmi.creerTrack(c1);*/
-		
-		//System.out.println(trackAllerGraine1);
-		
-		
-
 	}
 	
 }
