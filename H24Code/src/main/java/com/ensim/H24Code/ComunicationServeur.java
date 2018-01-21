@@ -383,10 +383,13 @@ public void EnvoyerTrackFourmieComplete() {
 	
 	try {
 		token=com.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0];
+
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
+		
 	}
+
 	com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c");
 	try {
 		idTrack=com.ListMyTracks(token).body().string().split("_id\":")[1].split("\",\"")[0];
@@ -411,13 +414,7 @@ public void EnvoyerTrackFourmieComplete() {
 	}
 	
 	com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" );
-	try {
-		System.out.println("change ant position:"+com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" ).isSuccessful());
-		System.out.println("get user info:"+com.GetMyUserInfo(token).body().string());
-	} catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	System.out.println("change ant position:"+com.changeAntPosition(token, idAnt1,"5a5e7207734d1d347185195c" ).isSuccessful());
 
 }
 
