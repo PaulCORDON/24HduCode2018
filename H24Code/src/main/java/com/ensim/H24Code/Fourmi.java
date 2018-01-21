@@ -94,8 +94,8 @@ public class Fourmi {
 		
 		/*Maison*/
 		Position p2 = new Position(47.984393, 0.236012);
-		/*Première graine*/
-		Position p1 = new Position(47.984946, 0.238951);
+		/*graine*/
+		Position p1 = new Position(47.987444,0.253475);
 		
 		Fourmi fourmi = new Fourmi();
 		Chemin trackAllerGraine1;
@@ -107,8 +107,9 @@ public class Fourmi {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		c.add(p1);
 		trackAllerGraine1 = fourmi.creerTrack(c);
+		
 
 		for(int i=0;i<trackAllerGraine1.size()-1;i++) {
 			System.out.println("\np"+i+" : "+trackAllerGraine1.get(i).lat+","+trackAllerGraine1.get(i).lon);

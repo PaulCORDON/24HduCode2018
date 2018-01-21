@@ -29,7 +29,8 @@ public class Chemin extends ArrayList<Position> {
 		
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
-		  .url("https://roads.googleapis.com/v1/snapToRoads?path="+p1.getLat()+", "+p1.getLon()+"|"+p2.getLat()+", "+p2.getLon()+"&interpolate=true&key=AIzaSyBdS5QGJC5iNRcKmAJxb3I7XF9TiX5Rj8Y")
+		  /*.url("https://roads.googleapis.com/v1/snapToRoads?path="+p1.getLat()+", "+p1.getLon()+"|"+p2.getLat()+", "+p2.getLon()+"&interpolate=true&key=AIzaSyBdS5QGJC5iNRcKmAJxb3I7XF9TiX5Rj8Y")*/
+			.url("https://roads.googleapis.com/v1/snapToRoads?path=47.9844782,0.2415538|47.986524,0.242720|47.987444,0.253475&interpolate=true&key=AIzaSyBdS5QGJC5iNRcKmAJxb3I7XF9TiX5Rj8Y")
 		  .get()
 		  .addHeader("Cache-Control", "no-cache")
 		  .addHeader("Postman-Token", "6ef08fe5-1f6e-939b-37ee-c7d12a755ea6")
