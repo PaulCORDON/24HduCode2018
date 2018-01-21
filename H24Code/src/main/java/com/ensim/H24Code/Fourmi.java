@@ -1,6 +1,8 @@
 package com.ensim.H24Code;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.Temporal;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -19,7 +21,7 @@ public class Fourmi {
 	Chemin creerTrack(Chemin c) {
 	    Chemin track = new Chemin();
 	    Position p = new Position();
-	    GregorianCalendar t =  new GregorianCalendar();
+	    Instant t =  Instant.now();
 	    
 	    /*On ajoute le premier point dans notre liste et on set le timestamp au temps actuel*/
 	    track.add(c.get(0));
@@ -29,7 +31,7 @@ public class Fourmi {
 	    for(int i=0;i<c.size()-1;i++) {
 	      
 	    	/*On incrémente le timestamp de 1 seconde*/	
-		    t.add(Calendar.SECOND,1);
+		    t.plusSeconds(1);
 		    
 		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
 		    if(this.vitesse<13.7 && !veutFreiner) {
