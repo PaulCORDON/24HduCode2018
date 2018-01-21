@@ -25,14 +25,23 @@ public class Cigale {
 		return false;
 	}
 	
-	boolean vitesseHorsLimite() {
+	boolean vitesseHorsLimite() throws IOException {
 		double distanceEntreDeuxPts;
+		double v ; 
+		String idTrack;
+		String idPos;
+		ComunicationServeur  serveur = new ComunicationServeur();
 		for (Position p : track) {
 			
 			distanceEntreDeuxPts = p.longueurEnM(p, track.get(track.indexOf(p)+1));
 			if (distanceEntreDeuxPts > 13.88 ) {
 				System.out.println("LA FOURMI VA A PLUS DE 50KM/H !!!!!!! a la position : "+ p.getLat() + "\n" +  p.getLon() + "la vitesse est de : " + distanceEntreDeuxPts*3.6) ;
-				//return false;
+				v = distanceEntreDeuxPts*3.6;
+				idTrack = track.get(0).id;
+				idPos = p.id;
+				boolean ok = serveur.AnalyseVitesseExesive(serveur.Auth("ant1@mill.ant", "Vent").body().string().split(":\"")[1].split("\"}")[0], idTrack, idPos, 50, v).isSuccessful();
+				System.out.println(ok);
+				return false;
 			}
 		}
 		
