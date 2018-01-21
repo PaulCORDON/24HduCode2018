@@ -99,16 +99,19 @@ public class Fourmi {
 		
 		Fourmi fourmi = new Fourmi();
 		Chemin trackAllerGraine1;
+		Chemin trackRetourGraine1;
 		
 		Chemin c = new Chemin();
+		Chemin c1 = new Chemin();
 		try {
-			c.calculItineraire(p1,p2);
+			c.calculItineraire(p2,p1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		c.add(p1);
 		trackAllerGraine1 = fourmi.creerTrack(c);
+	
 		
 
 		for(int i=0;i<trackAllerGraine1.size()-1;i++) {
@@ -120,6 +123,27 @@ public class Fourmi {
 		
 		System.out.println("p"+(trackAllerGraine1.size()-1)+" : "+trackAllerGraine1.get(trackAllerGraine1.size()-1).lat+","+trackAllerGraine1.get(trackAllerGraine1.size()-1).lon);
 		System.out.println(trackAllerGraine1.get(trackAllerGraine1.size()-1).getTimestamp());
+		
+		try {
+			c1.calculItineraire(p1, p2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		c1.add(p2);
+		trackRetourGraine1=fourmi.creerTrack(c1);
+		
+		for(int i=0;i<trackRetourGraine1.size()-1;i++) {
+			System.out.println("\np"+i+" : "+trackRetourGraine1.get(i).lat+","+trackRetourGraine1.get(i).lon);
+			System.out.println(trackRetourGraine1.get(i).getTimestamp());
+			System.out.println("La distance entre ces deux points est de "+p1.longueurEnM(trackRetourGraine1.get(i),trackRetourGraine1.get(i+1))+"m");
+				
+		}
+		
+		System.out.println("p"+(trackRetourGraine1.size()-1)+" : "+trackRetourGraine1.get(trackRetourGraine1.size()-1).lat+","+trackRetourGraine1.get(trackRetourGraine1.size()-1).lon);
+		System.out.println(trackRetourGraine1.get(trackRetourGraine1.size()-1).getTimestamp());
 	}
+
 	
 }
