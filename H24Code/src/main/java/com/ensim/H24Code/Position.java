@@ -37,6 +37,7 @@ public class Position {
 	}
 	
 	void setTimestamp(GregorianCalendar t) {
+		timestamp=new GregorianCalendar();
 		timestamp.set(Calendar.YEAR, t.get(Calendar.YEAR));
 		timestamp.set(Calendar.MONTH, t.get(Calendar.MONTH));
 		timestamp.set(Calendar.DAY_OF_MONTH, t.get(Calendar.DAY_OF_MONTH));
@@ -68,7 +69,7 @@ public class Position {
 	}
 	public String toString () {
 		
-		return "latitude = "+ lat + " longitude = "+ lon + " id = " + id + "\n"; 
+		return "la = "+ lat + " lon = "+ lon + " timestamp = " + this.getTimestamp() + "\n"; 
 		
 	}
 	

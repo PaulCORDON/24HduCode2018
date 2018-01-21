@@ -65,8 +65,10 @@ public class Fourmi {
 			    }
 		    
 		  }
-		  
-	      trackAllerGraine1.add(c.get(c.size()-1));
+		  p=c.get(c.size()-1);
+		  t.add(Calendar.SECOND,1);
+		  p.setTimestamp(t);
+	      trackAllerGraine1.add(p);
 		  veutFreiner=false;
 		  this.setVitesse(0);
 		  return c;
@@ -131,6 +133,8 @@ public class Fourmi {
 		}
 		
 		/*trackAllerGraine2 = fourmi.creerTrack(c1);*/
+		
+		System.out.println(trackAllerGraine1);
 		
 		
 
