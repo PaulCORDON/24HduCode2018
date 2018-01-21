@@ -15,65 +15,69 @@ public class Fourmi {
 		veutFreiner=false;
 	}
 	
+	/*Creer une liste de Position (Chemin) décrivant l'itinéraire de la fourmi à partir de l'itinéraire récuperer sur googlemap*/
 	Chemin creerTrack(Chemin c) {
-	    Chemin trackAllerGraine1 = new Chemin();
+	    Chemin track = new Chemin();
 	    Position p = new Position();
 	    GregorianCalendar t =  new GregorianCalendar();
 	    
-	    trackAllerGraine1.add(c.get(0));
-	    trackAllerGraine1.get(0).setTimestamp(t);
+	    /*On ajoute le premier point dans notre liste et on set le timestamp au temps actuel*/
+	    track.add(c.get(0));
+	    track.get(0).setTimestamp(t);
 
-	    
+	    /*On parcours l'itinéraire googlemap*/
 	    for(int i=0;i<c.size()-1;i++) {
 	      
-	      t.add(Calendar.SECOND,1);
-	      System.out.println(t.get(Calendar.YEAR)+"-"+t.get(Calendar.MONTH)+"-"+t.get(Calendar.DAY_OF_MONTH)+"T"+t.get(Calendar.HOUR_OF_DAY)+":"+t.get(Calendar.MINUTE)+":"+t.get(Calendar.SECOND)+"."+t.get(Calendar.MILLISECOND)+"Z");
-	      
-	      if(this.vitesse<13.7 && !veutFreiner) {
-	        this.setVitesse(this.getVitesse()+acceleration);
-	        System.out.println("a i="+i+" j'accelere");
-	      }
-
-		    /*if(i>=c.size()-(this.getVitesse()/acceleration)) {
-		      veutFreiner=true;
-		      this.setVitesse(this.getVitesse()-acceleration);
-		      System.out.println("a i="+i+" je ralentis");
-		    }*/
+	    	/*On incrémente le timestamp de 1 seconde*/	
+		    t.add(Calendar.SECOND,1);
 		    
-		    System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
-		    System.out.println("p"+(i+1)+" : "+c.get(i+1).lat+","+c.get(i+1).lon);
-		    System.out.println("La distance entre ces deux points est de "+p.longueurEnM(c.get(i), c.get(i+1))+"m");
-		    	System.out.println("vitesse  "+this.vitesse);
-			    if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
-			    	
-				    System.out.println("distance entre c"+i+" et c"+(i+1)+" : "+p.longueurEnM(c.get(i), c.get(i+1)));
-				    	
-				    p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);  
-				    p.setTimestamp(t);
-				    trackAllerGraine1.add(p);
-				    System.out.println("Le point p :"+p.lat+","+p.lon+" a ete ajoute a la liste");
-				    c.add(i+1, p);
-	      
-			    }
-			    else {
-			      p=c.get(i+1);
-			      p.setTimestamp(t);
-			      trackAllerGraine1.add(p);
-			      System.out.println("Le point p :"+c.get(i+1).lat+","+c.get(i+1).lon+" a ete ajoute a la liste");
-			    }
+		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
+		    if(this.vitesse<13.7 && !veutFreiner) {
+		    	this.setVitesse(this.getVitesse()+acceleration);
+		        System.out.println("a i="+i+" j'accelere");
+		      }
 		    
-		  }
-		  p=c.get(c.size()-1);
-		  p.setTimestamp(t);
-	      trackAllerGraine1.add(p);
-		  veutFreiner=false;
-		  this.setVitesse(0);
-		  return c;
+		    /*Freinage en anticipant l'arrêt*/
+			if(i>=c.size()-(this.getVitesse()/acceleration)) {
+			    veutFreiner=true;
+			    this.setVitesse(this.getVitesse()-acceleration);
+			    System.out.println("a i="+i+" je ralentis");
+			  }
+			
+			/*si la longueur entre les points de googlemap est plus grande que la distance que l'on
+			 * peut parcourir à notre vitesse, alors on recalcule un nouveau point plus proche.
+			 */
+			if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
+				p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);  
+				p.setTimestamp(t);
+				track.add(p);
+				/*On ajoute ce nouveau point à la liste google map pour garder une cohérence dans
+				 * le parcours.
+				 */
+				c.add(i+1, p);
+		      
+			}
+			else {
+				/*Si on dépasse, alors on prend le point google map que l'on vient de dépasser
+				 * pour l'ajouter dans notre liste
+				 */
+				p=c.get(i+1);
+				p.setTimestamp(t);
+				track.add(p);
+			}
+			    
+		}
+	    /*à la fin, on ajoute le dernier point google map
+	     * on réinitalise la vitesse et le booléen
+	     */
+	    p=c.get(c.size()-1);
+		p.setTimestamp(t);
+		track.add(p);
+		veutFreiner=false;
+		this.setVitesse(0);
+		return c;
 		  
 		}
-
-
-	
 	
 	void setVitesse(double v) {
 		vitesse=v;
@@ -131,7 +135,7 @@ public class Fourmi {
 		
 		/*trackAllerGraine2 = fourmi.creerTrack(c1);*/
 		
-		System.out.println(trackAllerGraine1);
+		//System.out.println(trackAllerGraine1);
 		
 		
 
