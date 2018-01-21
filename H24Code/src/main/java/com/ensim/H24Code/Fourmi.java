@@ -19,12 +19,10 @@ public class Fourmi {
 	    Chemin trackAllerGraine1 = new Chemin();
 	    Position p = new Position();
 	    GregorianCalendar t =  new GregorianCalendar();
-	    double longueurPrecedente=999999999;
 	    
 	    trackAllerGraine1.add(c.get(0));
 	    trackAllerGraine1.get(0).setTimestamp(t);
-	    
-	    int nbPoint=c.size();
+
 	    
 	    for(int i=0;i<c.size()-1;i++) {
 	      
@@ -45,7 +43,7 @@ public class Fourmi {
 		    System.out.println("p"+i+" : "+c.get(i).lat+","+c.get(i).lon);
 		    System.out.println("p"+(i+1)+" : "+c.get(i+1).lat+","+c.get(i+1).lon);
 		    System.out.println("La distance entre ces deux points est de "+p.longueurEnM(c.get(i), c.get(i+1))+"m");
-		    	
+		    	System.out.println("vitesse  "+this.vitesse);
 			    if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
 			    	
 				    System.out.println("distance entre c"+i+" et c"+(i+1)+" : "+p.longueurEnM(c.get(i), c.get(i+1)));
@@ -92,9 +90,9 @@ public class Fourmi {
 		 */
 		
 		/*Maison*/
-		Position p1 = new Position(47.984393, 0.236012);
+		Position p2 = new Position(47.984393, 0.236012);
 		/*Première graine*/
-		Position p2 = new Position(47.984946, 0.238951);
+		Position p1 = new Position(47.984946, 0.238951);
 		Position p3;
 		
 		Fourmi fourmi = new Fourmi();

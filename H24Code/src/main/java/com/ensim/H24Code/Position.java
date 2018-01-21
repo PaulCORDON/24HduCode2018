@@ -62,8 +62,22 @@ public class Position {
 	/*Donne le point après un parcours depuis p1 vers p2 de 1s à vitesse "vitesse"*/
 	Position prochainPointEnUneSeconde(Position p2, double vitesse) {
 		Position p1 = new Position();
-		p1.lat = (vitesse*Math.abs(p2.lat-this.lat)/this.longueurEnM(this, p2))+this.lat;
-		p1.lon = (vitesse*Math.abs(this.lon-p2.lon)/this.longueurEnM(this, p2))+this.lon;
+		if((p2.lat-this.lat)>0 && (this.lon-p2.lon)>0) {
+			p1.lat = (vitesse*(p2.lat-this.lat)/this.longueurEnM(this, p2))+this.lat;
+			p1.lon = (-vitesse*(this.lon-p2.lon)/this.longueurEnM(this, p2))+this.lon;
+		}
+		if((p2.lat-this.lat)<0 && (this.lon-p2.lon)>0) {
+			p1.lat = (-vitesse*(this.lat-p2.lat)/this.longueurEnM(this, p2))+this.lat;
+			p1.lon = (-vitesse*(this.lon-p2.lon)/this.longueurEnM(this, p2))+this.lon;
+		}
+		if((p2.lat-this.lat)>0 && (this.lon-p2.lon)<0) {
+			p1.lat = (vitesse*(p2.lat-this.lat)/this.longueurEnM(this, p2))+this.lat;
+			p1.lon = (vitesse*(p2.lon-this.lon)/this.longueurEnM(this, p2))+this.lon;
+		}
+		if((p2.lat-this.lat)<0 && (this.lon-p2.lon)<0) {
+			p1.lat = (-vitesse*(this.lat-p2.lat)/this.longueurEnM(this, p2))+this.lat;
+			p1.lon = (vitesse*(p2.lon-this.lon)/this.longueurEnM(this, p2))+this.lon;
+		}
 		
 		return p1;
 	}
