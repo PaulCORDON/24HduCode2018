@@ -2,9 +2,7 @@ package com.ensim.H24Code;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
-import javax.naming.CommunicationException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Fourmi {
-	
+	Instant t =  Instant.now();
 	double vitesse;
 	boolean veutFreiner;
 	static double acceleration=1.38;
@@ -21,17 +21,16 @@ public class Fourmi {
 	Chemin creerTrack(Chemin c) {
 	    Chemin track = new Chemin();
 	    Position p = new Position();
-	    Instant t =  Instant.now();
 	    
 	    /*On ajoute le premier point dans notre liste et on set le timestamp au temps actuel*/
 	    track.add(c.get(0));
-	    track.get(0).setTimestamp();
+	    track.get(0).setTimestamp(t);
 
 	    /*On parcours l'itinéraire googlemap*/
 	    for(int i=0;i<c.size()-1;i++) {
 	      
 	    	/*On incrémente le timestamp de 1 seconde*/	
-		    t.plusSeconds(1);
+	    	t=t.plusMillis(1000);
 		    
 		    /*Si la vitesse est inférieure à la vitesse max et qu'on ne veut pas freiner, on accélère*/
 		    if(this.vitesse<13.7 && !veutFreiner) {
@@ -49,7 +48,7 @@ public class Fourmi {
 			 */
 			if(p.longueurEnM(c.get(i), c.get(i+1))>this.vitesse*1) {
 				p=c.get(i).prochainPointEnUneSeconde(c.get(i+1), this.vitesse);  
-				p.setTimestamp();
+				p.setTimestamp(t);
 				track.add(p);
 				/*On ajoute ce nouveau point à la liste google map pour garder une cohérence dans
 				 * le parcours.
@@ -62,7 +61,7 @@ public class Fourmi {
 				 * pour l'ajouter dans notre liste
 				 */
 				p=c.get(i+1);
-				p.setTimestamp();
+				p.setTimestamp(t);
 				track.add(p);
 			}
 			    
@@ -71,7 +70,7 @@ public class Fourmi {
 	     * on réinitalise la vitesse et le booléen
 	     */
 	    p=c.get(c.size()-1);
-		p.setTimestamp();
+		p.setTimestamp(t);
 		track.add(p);
 		veutFreiner=false;
 		this.setVitesse(0);
@@ -112,7 +111,7 @@ public class Fourmi {
 		trackAllerGraine1 = fourmi.creerTrack(c);
 
 		for(int i=0;i<trackAllerGraine1.size()-1;i++) {
-			System.out.println("p"+i+" : "+trackAllerGraine1.get(i).lat+","+trackAllerGraine1.get(i).lon);
+			System.out.println("\np"+i+" : "+trackAllerGraine1.get(i).lat+","+trackAllerGraine1.get(i).lon);
 			System.out.println(trackAllerGraine1.get(i).getTimestamp());
 			System.out.println("La distance entre ces deux points est de "+p1.longueurEnM(trackAllerGraine1.get(i),trackAllerGraine1.get(i+1))+"m");
 				
