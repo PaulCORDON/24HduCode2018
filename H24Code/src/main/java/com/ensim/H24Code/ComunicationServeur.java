@@ -45,7 +45,7 @@ public class ComunicationServeur {
 	public Response CreatePositions(String id, String idTrack,String positions){
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
-		RequestBody body = RequestBody.create(mediaType, positions);
+		RequestBody body = RequestBody.create(mediaType, "{\r\n    \"trackId\": "+idTrack+",\r\n    \"positions\":"+positions+" }");
 		Request request = new Request.Builder()
 		  .url("https://f24h2018.herokuapp.com/api/positions/bulk")
 		  .post(body)
@@ -392,7 +392,7 @@ public void EnvoyerTrackFourmieComplete() {
 
 	com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c");
 	try {
-		idTrack=com.ListMyTracks(token).body().string().split("_id\":")[1].split("\",\"")[0];
+		idTrack=com.createTrack("Track test", token, "5a5e71a2734d1d347185192c", "5a5e7207734d1d347185195c").body().string().split("_id\":")[1].split("\",\"")[0];
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
